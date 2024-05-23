@@ -41,6 +41,7 @@ rule bwa_mem2:
     shell:
         """
         bwa-mem2 mem -t {threads} -p {input.ref} {input.fastq} \
+            | python {params.reset_mapq} \
             | samtools sort -@ {threads} -m 4G -o {output.bam} --write-index
         """
 
