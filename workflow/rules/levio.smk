@@ -4,7 +4,7 @@ rule fastq_input:
     input:
         reads=lambda wc: config["inputs"][wc.sm],
     output:
-        fastq=temp("temp/{sm}/fastq_input/{chrom}.fastq.gz"),
+        fastq=temp("temp/{sm}/fastq_input/{sm}.fastq.gz"),
     threads: 8
     resources:
         mem_mb=32 * 1024,
