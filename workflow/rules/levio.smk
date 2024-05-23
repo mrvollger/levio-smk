@@ -89,7 +89,7 @@ rule leviosam2_sorted:
     shell:
         """
         samtools sort \
-            -@ {threads} -m 3G \ 
+            -@ {threads} -m 3G \
             -o {output.bam} --write-index \
             {input.bam}
         """
