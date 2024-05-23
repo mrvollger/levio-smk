@@ -1,5 +1,7 @@
 import os
 
+configfile: "config/config.yaml"
+
 DEFAULT_ENV = "../envs/env.yaml"
 REF = config["ref"]
 LEVIO_EXE = config["levio_exe"]
@@ -7,7 +9,6 @@ LEVIO_INDEX = config["levio_index"]
 DSA = config["dsa"]
 SAMPLES = config["inputs"].keys()
 
-configfile: "config/config.yaml"
 
 include: "rules/levio.smk"
 
