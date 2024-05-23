@@ -1,0 +1,16 @@
+import os 
+
+DEFAULT_ENV = "../envs/env.yaml"
+REF = config["ref"]
+LEVIO_EXE = config["levio_exe"]
+DSA = config["dsa"]
+SAMPLES = config["inputs"].keys()
+
+include: "rules/levio.smk"
+
+wildcard_constraints:
+    sm = "|".join(SAMPLES)
+
+rule all:
+    input:
+        expand(rules.levio_sort.output, sm=SAMPLES)
