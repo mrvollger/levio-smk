@@ -13,7 +13,7 @@ rule fastq_input:
     shell:
         """
         # check if input is bam
-        if [[ {input.reads} =~ .*\.(bam|sam|cram) ]]; then
+        if [[ {input.reads} =~ .*\\.(bam|sam|cram) ]]; then
             samtools collate -@ {threads} -u -O {input.reads} \
                 | samtools fastq -@ {threads} -0 /dev/null \
                 | bgzip -@ {threads} \
