@@ -7,6 +7,7 @@ LEVIO_INDEX = config["levio_index"]
 DSA = config["dsa"]
 SAMPLES = config["inputs"].keys()
 
+configfile: "config/config.yaml"
 
 include: "rules/levio.smk"
 
