@@ -33,7 +33,7 @@ rule bwa_mem2:
         csi="results/DSA/{sm}-bwamem2.bam.csi",
     threads: 16
     resources:
-        mem_mb=32 * 1024,
+        mem_mb=64 * 1024,
     conda:
         DEFAULT_ENV
     params:
@@ -42,7 +42,7 @@ rule bwa_mem2:
         """
         bwa-mem2 mem -t {threads} -p {input.ref} {input.fastq} \
             | python {params.reset_mapq} \
-            | samtools sort -@ {threads} -m 4G -o {output.bam} --write-index
+            | samtools sort -@ {threads} -m 3G -o {output.bam} --write-index
         """
 
 
@@ -55,7 +55,7 @@ rule leviosam2:
         bam=temp("temp/{sm}/leviosam2/{sm}-committed.bam"),
     threads: 16
     resources:
-        mem_mb=32 * 1024,
+        mem_mb=64 * 1024,
     conda:
         DEFAULT_ENV
     params:
