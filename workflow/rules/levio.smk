@@ -29,8 +29,8 @@ rule bwa_mem2:
         ref=DSA,
         fastq=rules.fastq_input.output.fastq,
     output:
-        bam=temp("temp/{sm}/bwa_mem2/{chrom}.bam"),
-        csi=temp("temp/{sm}/bwa_mem2/{chrom}.bam.csi"),
+        bam=temp("temp/{sm}/bwa_mem2/{sm}.bam"),
+        csi=temp("temp/{sm}/bwa_mem2/{sm}.bam.csi"),
     threads: 16
     resources:
         mem_mb=32 * 1024,
