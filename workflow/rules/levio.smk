@@ -36,6 +36,8 @@ rule bwa_mem2:
         mem_mb=32 * 1024,
     conda:
         DEFAULT_ENV
+    params:
+        reset_mapq=workflow.source_path("../scripts/reset-mapq.py"),
     shell:
         """
         bwa-mem2 mem -t {threads} -p {input.ref} {input.fastq} \

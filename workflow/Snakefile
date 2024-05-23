@@ -1,6 +1,8 @@
 import os
 
+
 configfile: "config/config.yaml"
+
 
 DEFAULT_ENV = "../envs/env.yaml"
 REF = config["ref"]
