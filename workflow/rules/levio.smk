@@ -85,7 +85,7 @@ rule leviosam2_sorted:
     output:
         bam="results/{sm}-leviosam2.bam",
         csi="results/{sm}-leviosam2.bam.csi",
-    threads: SORT_THREADS 
+    threads: SORT_THREADS
     resources:
         mem_mb=SORT_THREADS * 4 * 1024,
     conda:

@@ -13,6 +13,7 @@ SAMPLES = config["inputs"].keys()
 MAX_THREADS = config.get("max_threads", 32)
 SORT_THREADS = min(MAX_THREADS, 16)
 
+
 include: "rules/levio.smk"
 
 
