@@ -51,6 +51,8 @@ rule leviosam2:
         ref=REF,
     output:
         bam=temp("temp/{sm}/leviosam2/{sm}-committed.bam"),
+        deferred=temp("temp/{sm}/leviosam2/{sm}-deferred.bam"),
+        unliftable=temp("temp/{sm}/leviosam2/{sm}-unliftable.bam"),
     threads: MAX_THREADS
     resources:
         mem_mb=MAX_THREADS * 4 * 1024,
