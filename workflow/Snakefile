@@ -10,6 +10,7 @@ LEVIO_EXE = config["levio_exe"]
 LEVIO_INDEX = config["levio_index"]
 DSA = config["dsa"]
 SAMPLES = config["inputs"].keys()
+MAX_THREADS = config.get("max_threads", 16)
 
 
 include: "rules/levio.smk"

@@ -1,11 +1,9 @@
-
-
 rule fastq_input:
     input:
         reads=lambda wc: config["inputs"][wc.sm],
     output:
         fastq=temp("temp/{sm}/fastq_input/{sm}.fastq.gz"),
-    threads: 8
+    threads: MAX_THREADS // 2
     resources:
         mem_mb=32 * 1024,
     conda:
@@ -31,9 +29,9 @@ rule bwa_mem2:
     output:
         bam="results/DSA/{sm}-bwamem2.bam",
         csi="results/DSA/{sm}-bwamem2.bam.csi",
-    threads: 16
+    threads: MAX_THREADS
     resources:
-        mem_mb=64 * 1024,
+        mem_mb=MAX_THREADS * 4 * 1024,
     conda:
         DEFAULT_ENV
     params:
@@ -53,9 +51,9 @@ rule leviosam2:
         ref=REF,
     output:
         bam=temp("temp/{sm}/leviosam2/{sm}-committed.bam"),
-    threads: 16
+    threads: MAX_THREADS
     resources:
-        mem_mb=64 * 1024,
+        mem_mb=MAX_THREADS * 4 * 1024,
     conda:
         DEFAULT_ENV
     params:
@@ -81,9 +79,9 @@ rule leviosam2_sorted:
     output:
         bam="results/{sm}-leviosam2.bam",
         csi="results/{sm}-leviosam2.bam.csi",
-    threads: 16
+    threads: MAX_THREADS
     resources:
-        mem_mb=64 * 1024,
+        mem_mb=MAX_THREADS * 4 * 1024,
     conda:
         DEFAULT_ENV
     shell:
