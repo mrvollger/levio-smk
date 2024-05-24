@@ -61,7 +61,10 @@ rule leviosam2:
     params:
         # maximum number of CIGAR opts to change, also the max gap size that can be spanned
         G=config.get("levio_G", 100_000),
-        S=config.get("levio_S", "-S mapq:0 -S hdist:50 -S isize:10000 -S aln_score:75"),
+        S=config.get(
+            "levio_S",
+            "-S mapq:0 -S hdist:100000 -S isize:100000 -S aln_score:75 -S clipped_frac:0.50",
+        ),
     shell:
         """
         PRE="temp/{wildcards.sm}/leviosam2/{wildcards.sm}"
