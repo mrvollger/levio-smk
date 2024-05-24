@@ -59,7 +59,7 @@ rule leviosam2:
     conda:
         DEFAULT_ENV
     params:
-        G=config.get("levio_G", 50),
+        G=config.get("levio_G", 125),
         S=config.get("levio_S", "-S mapq:0 -S hdist:50 -S isize:10000"),
     shell:
         """
