@@ -4,8 +4,8 @@ levio_exe: "/mmfs1/gscratch/stergachislab/mvollger/projects/SMaHT/leviosam/src-l
 levio_index: "/mmfs1/gscratch/stergachislab/mvollger/projects/SMaHT/leviosam/Move-COLO829BL-DSA-to-GRCh38.clft"
 
 inputs:
-  #SMHTCOLO829BLT50-X-X-M45-H001-washu-SMAFI1DUSUVA: /mmfs1/gscratch/stergachislab/mvollger/projects/SMaHT/benchmarking/SMHTCOLO829BLT50-X-X-M45-H001-washu-SMAFI1DUSUVA-sentieon_bwamem_202308.01_GRCh38.aligned.sorted.fq.gz
-  #SMHTCOLO829BLT50-X-X-M45-H001-washu-SMAFICVKRYJZ: /mmfs1/gscratch/stergachislab/mvollger/projects/SMaHT/benchmarking/SMHTCOLO829BLT50-X-X-M45-H001-washu-SMAFICVKRYJZ-sentieon_bwamem_202308.01_GRCh38.aligned.sorted.fq.gz
-  #SMHTCOLO829BLT50-X-X-M45-H001-washu-SMAFIHFZ6PXL: /mmfs1/gscratch/stergachislab/mvollger/projects/SMaHT/benchmarking/SMHTCOLO829BLT50-X-X-M45-H001-washu-SMAFIHFZ6PXL-sentieon_bwamem_202308.01_GRCh38.aligned.sorted.fq.gz
+  SMHTCOLO829BLT50-X-X-M45-H001-washu-SMAFI1DUSUVA: /mmfs1/gscratch/stergachislab/mvollger/projects/SMaHT/benchmarking/SMHTCOLO829BLT50-X-X-M45-H001-washu-SMAFI1DUSUVA-sentieon_bwamem_202308.01_GRCh38.aligned.sorted.fq.gz
+  SMHTCOLO829BLT50-X-X-M45-H001-washu-SMAFICVKRYJZ: /mmfs1/gscratch/stergachislab/mvollger/projects/SMaHT/benchmarking/SMHTCOLO829BLT50-X-X-M45-H001-washu-SMAFICVKRYJZ-sentieon_bwamem_202308.01_GRCh38.aligned.sorted.fq.gz
+  SMHTCOLO829BLT50-X-X-M45-H001-washu-SMAFIHFZ6PXL: /mmfs1/gscratch/stergachislab/mvollger/projects/SMaHT/benchmarking/SMHTCOLO829BLT50-X-X-M45-H001-washu-SMAFIHFZ6PXL-sentieon_bwamem_202308.01_GRCh38.aligned.sorted.fq.gz
   SMHTCOLO829BLT50-X-X-M45-H001-washu-SMAFIHHBYWD6: /mmfs1/gscratch/stergachislab/mvollger/projects/SMaHT/benchmarking/SMHTCOLO829BLT50-X-X-M45-H001-washu-SMAFIHHBYWD6-sentieon_bwamem_202308.01_GRCh38.aligned.sorted.fq.gz
   SMHTCOLO829BLT50-X-X-M45-H001-washu-SMAFIWREADYB: /mmfs1/gscratch/stergachislab/mvollger/projects/SMaHT/benchmarking/SMHTCOLO829BLT50-X-X-M45-H001-washu-SMAFIWREADYB-sentieon_bwamem_202308.01_GRCh38.aligned.sorted.fq.gz
