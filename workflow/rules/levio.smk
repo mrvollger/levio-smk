@@ -60,13 +60,13 @@ rule leviosam2:
         DEFAULT_ENV
     params:
         G=config.get("levio_G", 125),
-        S=config.get("levio_S", "-S mapq:0 -S hdist:50 -S isize:10000"),
+        S=config.get("levio_S", "-S mapq:0 -S hdist:50 -S isize:10000 -S aln_score:75"),
     shell:
         """
         PRE="temp/{wildcards.sm}/leviosam2/{wildcards.sm}"
         {LEVIO_EXE} lift \
             -t {threads} -T 100000 \
-            -G {params.G} -S {params.S} \
+            -G {params.G} {params.S} \
             -C {input.levio_index} \
             -a {input.bam} \
             -p $PRE \
