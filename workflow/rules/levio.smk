@@ -3,9 +3,9 @@ rule fastq_input:
         reads=lambda wc: config["inputs"][wc.sm],
     output:
         fastq=temp("temp/{sm}/fastq_input/{sm}.fastq.gz"),
-    threads: SORT_THREADS // 2
+    threads: SORT_THREADS
     resources:
-        mem_mb=32 * 1024,
+        mem_mb=SORT_THREADS * 4 * 1024,
     conda:
         DEFAULT_ENV
     shell:
