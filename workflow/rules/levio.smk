@@ -59,7 +59,8 @@ rule leviosam2:
     conda:
         DEFAULT_ENV
     params:
-        G=config.get("levio_G", 125),
+        # maximum number of CIGAR opts to change, also the max gap size that can be spanned
+        G=config.get("levio_G", 100_000),
         S=config.get("levio_S", "-S mapq:0 -S hdist:50 -S isize:10000 -S aln_score:75"),
     shell:
         """
