@@ -47,6 +47,7 @@ rule bwa_mem2:
 rule leviosam2:
     input:
         bam=rules.bwa_mem2.output.bam,
+        csi=rules.bwa_mem2.output.csi,
         levio_index=LEVIO_INDEX,
         ref=REF,
     output:
