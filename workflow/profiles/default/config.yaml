@@ -11,4 +11,4 @@ local-cores: 4
 default-resources:
   - disk_mb=4096
   - mem_mb=16096
-  - runtime=600
+  - runtime=1200
