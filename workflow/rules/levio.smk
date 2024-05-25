@@ -61,11 +61,11 @@ rule leviosam2:
         DEFAULT_ENV
     params:
         # maximum number of CIGAR opts to change, also the max gap size that can be spanned
-        G=config.get("levio_G", 10_000),
+        G=config.get("levio_G", 50_000),
         # "-S aln_score:100 -S clipped_frac:0.95",
         S=config.get(
             "levio_S",
-            "-S mapq:0 -S hdist:10000 -S isize:10000",
+            f"-S mapq:0 -S hdist:{50_000} -S isize:{50_000}",
         ),
     shell:
         """
