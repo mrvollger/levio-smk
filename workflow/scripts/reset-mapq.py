@@ -8,7 +8,6 @@ import pysam
 from tqdm import tqdm
 
 
-
 def main(
     infile: Optional[Path] = None,
     *,
@@ -16,6 +15,7 @@ def main(
     threads: int = 16,
     verbose: int = 0,
     mapq: int = 60,
+    XS: int = 0,
 ):
     """
     Author Mitchell R. Vollger
@@ -24,12 +24,14 @@ def main(
         infile = sys.stdin
     if outfile == "-":
         outfile = sys.stdout
-        
-    bam = pysam.AlignmentFile(infile, threads=threads/2)
-    obam = pysam.AlignmentFile(outfile, "wbu", template=bam, threads=threads/2)
+
+    bam = pysam.AlignmentFile(infile, threads=threads / 2)
+    obam = pysam.AlignmentFile(outfile, "wbu", template=bam, threads=threads / 2)
 
     for rec in tqdm(bam.fetch(until_eof=True)):
         rec.mapping_quality = mapq
+        if rec.has_tag("XS"):
+            rec.set_tag("XS", XS)
         obam.write(rec)
 
     return 0
