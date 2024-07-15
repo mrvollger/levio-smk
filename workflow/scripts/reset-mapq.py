@@ -27,10 +27,14 @@ def main(
 
     bam = pysam.AlignmentFile(infile, threads=threads / 2)
     obam = pysam.AlignmentFile(outfile, "wbu", template=bam, threads=threads / 2)
-
+    first = True
+    
     for rec in tqdm(bam.fetch(until_eof=True)):
         rec.mapping_quality = mapq
         if rec.has_tag("XS"):
+            if first:
+                first = False
+                print("\nINFO: XS tag present in the input file", file=sys.stderr)
             rec.set_tag("XS", XS)
         obam.write(rec)
 
