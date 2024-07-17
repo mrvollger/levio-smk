@@ -61,7 +61,7 @@ rule leviosam2_index:
     shell:
         """
         {LEVIO_EXE} index \
-            -p results/leviosam2-index/index.clft \
+            -p results/leviosam2-index/index \
             -c {input.chain} \
             -F {input.fai}
         """
