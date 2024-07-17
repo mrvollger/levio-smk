@@ -35,14 +35,12 @@ rule bwa_mem2:
     conda:
         DEFAULT_ENV
     params:
-        reset_mapq=workflow.source_path("../scripts/reset-mapq.py"),
         bwa_h=config.get("bwa_h", "0"),
     shell:
         """
         bwa-mem2 mem \
             -t {threads} -h {params.bwa_h} \
             -p {input.ref} {input.fastq} \
-            | python {params.reset_mapq} \
             | samtools sort -@ {threads} -m 1G -o {output.bam} --write-index
         """
 
@@ -114,10 +112,12 @@ rule leviosam2_sorted:
         mem_mb=SORT_THREADS * 4 * 1024,
     conda:
         DEFAULT_ENV
+    params:
+        reset_mapq=workflow.source_path("../scripts/reset-mapq.py"),
     shell:
         """
-        samtools sort \
-            -@ {threads} -m 3G \
-            -o {output.bam} --write-index \
-            {input.bam}
+        python {params.reset_mapq} -t {threads} {input.bam} \
+            | samtools sort \
+                -@ {threads} -m 3G \
+                -o {output.bam} --write-index 
         """
