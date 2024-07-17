@@ -60,7 +60,7 @@ rule leviosam2_index:
         mem_mb=64*1024,
     shell:
         """
-        leviosam2 index \
+        {LEVIO_EXE} index \
             -p results/leviosam2-index/index.clft \
             -c {input.chain} \
             -F {input.fai}
