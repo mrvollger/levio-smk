@@ -36,12 +36,11 @@ rule bwa_mem2:
         DEFAULT_ENV
     params:
         reset_mapq=workflow.source_path("../scripts/reset-mapq.py"),
-        bwa_n=config.get("bwa_n", 0),
-        bwa_N=config.get("bwa_N", 0),
+        bwa_h=config.get("bwa_h", "0"),
     shell:
         """
         bwa-mem2 mem \
-            -t {threads} -n {params.bwa_n} -N {params.bwa_N} \
+            -t {threads} -h {params.bwa_h} \
             -p {input.ref} {input.fastq} \
             | python {params.reset_mapq} \
             | samtools sort -@ {threads} -m 1G -o {output.bam} --write-index
