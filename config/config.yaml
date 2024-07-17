@@ -1,7 +1,7 @@
-dsa: "/mmfs1/gscratch/stergachislab/mvollger/projects/SMaHT/EEE_asms/DSA/COLO829-BL/hifiasm/COLO829-BL_60X_hifiasm/COLO829-BL_60X_hifiasm.fasta.gz"
+dsa: "/mmfs1/gscratch/stergachislab/mvollger/projects/SMaHT/reference/COLO829-BL_60X_verkko.fasta.gz"
 ref: "/mmfs1/gscratch/stergachislab/assemblies/hg38.analysisSet.fa"
 levio_exe: "/mmfs1/gscratch/stergachislab/mvollger/projects/SMaHT/leviosam/src-leviosam2/build/leviosam2"
-levio_index: "/mmfs1/gscratch/stergachislab/mvollger/projects/SMaHT/leviosam/Move-COLO829BL-DSA-to-GRCh38.clft"
+levio_chain: "/mmfs1/gscratch/stergachislab/mvollger/projects/SMaHT/chain-to-dsa/asm-to-reference-alignment/results/GRCh38/chain/COLO829_BL_60X_verkko_1.target_to_query.inverted.chain"
 
 inputs:
   SMHTCOLO829BLT50-X-X-M45-H001-washu-SMAFI1DUSUVA: /mmfs1/gscratch/stergachislab/mvollger/projects/SMaHT/benchmarking/SMHTCOLO829BLT50-X-X-M45-H001-washu-SMAFI1DUSUVA-sentieon_bwamem_202308.01_GRCh38.aligned.sorted.fq.gz

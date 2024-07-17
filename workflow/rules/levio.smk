@@ -48,11 +48,30 @@ rule bwa_mem2:
         """
 
 
+rule leviosam2_index:
+    input:
+        chain=LEVIO_CHAIN,
+        fai=FAI,
+    output:
+        index="results/leviosam2-index/index.clft",
+    conda:
+        DEFAULT_ENV
+    threads: 1
+    resources:
+        mem_mb=64*1024,
+    shell:
+        """
+        leviosam2 index \
+            -p results/leviosam2-index/index.clft \
+            -c {input.chain} \
+            -F {input.fai}
+        """
+
 rule leviosam2:
     input:
         bam=rules.bwa_mem2.output.bam,
         csi=rules.bwa_mem2.output.csi,
-        levio_index=LEVIO_INDEX,
+        levio_index=rules.leviosam2_index.output.index,
         ref=REF,
     output:
         bam=temp("temp/{sm}/leviosam2/{sm}-committed.bam"),
