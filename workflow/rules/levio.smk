@@ -1,3 +1,6 @@
+#
+# unimportant function that allows the pipeline to use fastqs or already aligned short paired reads
+#
 rule fastq_input:
     input:
         reads=lambda wc: config["inputs"][wc.sm],
@@ -21,7 +24,11 @@ rule fastq_input:
         fi
         """
 
-
+#
+# Alignment of fastqs to the 6Gbp donor specific assembly (DSA)
+# These outputs will have many mapq 0 reads that will later be adjusted. 
+# But this is only becuase of the diploid setup, not a lack of confidence in the alignment.
+#
 rule bwa_mem2:
     input:
         ref=DSA,
@@ -44,7 +51,14 @@ rule bwa_mem2:
             | samtools sort -@ {threads} -m 1G -o {output.bam} --write-index
         """
 
-
+#
+# Index the chain file for leviosam2. 
+#
+# Input here is a chain file that defines the alignment between the DSA and the reference genome
+# at a contig level (>100 kbp of alignment).
+# 
+# The output is a special leviosam2 index file that is used to lift over the alignments from the DSA to the reference genome.
+#
 rule leviosam2_index:
     input:
         chain=LEVIO_CHAIN,
@@ -64,6 +78,11 @@ rule leviosam2_index:
             -F {input.fai}
         """
 
+#
+# Lift over the alignments from the DSA to the reference genome using the chain file / leviosam2 index.
+#
+# This is not a realignment, but a lift over of the reads from the DSA to the reference genome.
+#
 rule leviosam2:
     input:
         bam=rules.bwa_mem2.output.bam,
@@ -101,6 +120,16 @@ rule leviosam2:
         """
 
 
+#
+# This step sorted the leviosam2 output and fixes some tags in the BAM file.
+#
+# Specifically, the MAPQ is reset to 60 for all reads that were previously aligned to the DSA.
+# And the XS tag is set to zero for all reads that were aligned to the DSA.
+# This is a hueristic that we may need to return to in the future.
+#
+# Other tags and fields like CIGAR, bitflags, and MD are correctly updated by 
+# leviosam2 during liftover.
+#
 rule leviosam2_sorted:
     input:
         bam=rules.leviosam2.output.bam,
