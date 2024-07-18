@@ -1,5 +1,5 @@
 #
-# unimportant function that allows the pipeline to use fastqs or already aligned short paired reads
+# Simple function that allows the pipeline to use fastqs or already aligned short paired reads
 #
 rule fastq_input:
     input:
