@@ -9,7 +9,7 @@ LEVIO_EXE = config["levio_exe"]
 LEVIO_CHAIN = config["levio_chain"]
 DSA = config["dsa"]
 SAMPLES = config["inputs"].keys()
-MAX_THREADS = config.get("max_threads", 40)
+MAX_THREADS = config.get("max_threads", 64)
 SORT_THREADS = min(MAX_THREADS, 16)
 
 
