@@ -35,7 +35,7 @@ rule bwa_mem2:
         fastq=rules.fastq_input.output.fastq,
     output:
         cram="results/DSA/{sm}-bwamem2.cram",
-        csi="results/DSA/{sm}-bwamem2.cram.csi",
+        crai="results/DSA/{sm}-bwamem2.cram.crai",
     threads: MAX_THREADS
     resources:
         mem_mb=MAX_THREADS * 4 * 1024,
@@ -89,7 +89,7 @@ rule leviosam2_index:
 rule leviosam2:
     input:
         cram=rules.bwa_mem2.output.cram,
-        csi=rules.bwa_mem2.output.csi,
+        crai=rules.bwa_mem2.output.crai,
         levio_index=rules.leviosam2_index.output.index,
         ref=REF,
     output:
@@ -139,7 +139,7 @@ rule leviosam2_sorted:
         ref=REF,
     output:
         cram="results/{sm}-leviosam2.cram",
-        csi="results/{sm}-leviosam2.cram.csi",
+        crai="results/{sm}-leviosam2.cram.crai",
     threads: SORT_THREADS
     resources:
         mem_mb=SORT_THREADS * 4 * 1024,
