@@ -34,8 +34,8 @@ rule bwa_mem2:
         ref=DSA,
         fastq=rules.fastq_input.output.fastq,
     output:
-        bam="results/DSA/{sm}-bwamem2.bam",
-        csi="results/DSA/{sm}-bwamem2.bam.csi",
+        cram="results/DSA/{sm}-bwamem2.cram",
+        csi="results/DSA/{sm}-bwamem2.cram.csi",
     threads: MAX_THREADS
     resources:
         mem_mb=MAX_THREADS * 4 * 1024,
@@ -48,7 +48,10 @@ rule bwa_mem2:
         bwa-mem2 mem \
             -t {threads} -h {params.bwa_h} \
             -p {input.ref} {input.fastq} \
-            | samtools sort -@ {threads} -m 1G -o {output.bam} --write-index
+            | samtools sort \
+                -@ {threads} -m 1G \
+                -C -T {input.ref} --output-fmt-option embed_ref=1 \
+                -o {output.cram} --write-index
         """
 
 #
@@ -85,7 +88,7 @@ rule leviosam2_index:
 #
 rule leviosam2:
     input:
-        bam=rules.bwa_mem2.output.bam,
+        cram=rules.bwa_mem2.output.cram,
         csi=rules.bwa_mem2.output.csi,
         levio_index=rules.leviosam2_index.output.index,
         ref=REF,
@@ -113,7 +116,7 @@ rule leviosam2:
             -t {threads} -T 100000 \
             -G {params.G} {params.S} \
             -C {input.levio_index} \
-            -a {input.bam} \
+            -a {input.cram} \
             -p $PRE \
             -f {input.ref} -m \
             -O bam
@@ -121,7 +124,7 @@ rule leviosam2:
 
 
 #
-# This step sorted the leviosam2 output and fixes some tags in the BAM file.
+# This step sorted the leviosam2 output and fixes some tags in the CRAM file.
 #
 # Specifically, the MAPQ is reset to 60 for all reads that were previously aligned to the DSA.
 # And the XS tag is set to zero for all reads that were aligned to the DSA.
@@ -133,9 +136,10 @@ rule leviosam2:
 rule leviosam2_sorted:
     input:
         bam=rules.leviosam2.output.bam,
+        ref=REF,
     output:
-        bam="results/{sm}-leviosam2.bam",
-        csi="results/{sm}-leviosam2.bam.csi",
+        cram="results/{sm}-leviosam2.cram",
+        csi="results/{sm}-leviosam2.cram.csi",
     threads: SORT_THREADS
     resources:
         mem_mb=SORT_THREADS * 4 * 1024,
@@ -148,5 +152,6 @@ rule leviosam2_sorted:
         python {params.reset_mapq} -t {threads} {input.bam} \
             | samtools sort \
                 -@ {threads} -m 3G \
-                -o {output.bam} --write-index 
+                -C -T {input.ref} --output-fmt-option embed_ref=1 \
+                -o {output.cram} --write-index 
         """
