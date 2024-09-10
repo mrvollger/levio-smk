@@ -47,7 +47,7 @@ rule bwa_mem2:
         """
         bwa-mem2 mem \
             -t {threads} -h {params.bwa_h} \
-            -p {input.ref} <(zcat {input.fastq} | head -n 400)\
+            -p {input.ref} {input.fastq}\
             | samtools sort \
                 -@ {threads} -m 1G \
                 -O CRAM --reference {input.ref} --output-fmt-option embed_ref=1 \
