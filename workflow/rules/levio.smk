@@ -47,10 +47,10 @@ rule bwa_mem2:
         """
         bwa-mem2 mem \
             -t {threads} -h {params.bwa_h} \
-            -p {input.ref} {input.fastq} \
+            -p {input.ref} <(zcat {input.fastq} | head -n 400)\
             | samtools sort \
                 -@ {threads} -m 1G \
-                -O CRAM -T {input.ref} --output-fmt-option embed_ref=1 \
+                -O CRAM --reference {input.ref} --output-fmt-option embed_ref=1 \
                 -o {output.cram} --write-index
         """
 
@@ -152,6 +152,6 @@ rule leviosam2_sorted:
         python {params.reset_mapq} -t {threads} {input.bam} \
             | samtools sort \
                 -@ {threads} -m 3G \
-                -O CRAM -T {input.ref} --output-fmt-option embed_ref=1 \
+                -O CRAM --reference {input.ref} --output-fmt-option embed_ref=1 \
                 -o {output.cram} --write-index 
         """
