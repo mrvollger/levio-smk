@@ -49,7 +49,7 @@ rule bwa_mem2:
             -t {threads} -h {params.bwa_h} \
             -p {input.ref} {input.fastq}\
             | samtools sort \
-                -@ {threads} -m 1G \
+                -@ {threads} -m 2G \
                 -O CRAM --reference {input.ref} --output-fmt-option embed_ref=1 \
                 -o {output.cram} --write-index
         """
