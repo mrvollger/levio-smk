@@ -26,7 +26,7 @@ def main(
         outfile = sys.stdout
 
     bam = pysam.AlignmentFile(infile, threads=threads / 2)
-    obam = pysam.AlignmentFile(outfile, "wbu", template=bam, threads=threads / 2)
+    obam = pysam.AlignmentFile(outfile, "wb", template=bam, threads=threads / 2)
     first = True
 
     for rec in tqdm(bam.fetch(until_eof=True)):
