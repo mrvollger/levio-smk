@@ -9,6 +9,7 @@ rule fastq_input:
     threads: SORT_THREADS
     resources:
         mem_mb=SORT_THREADS * 4 * 1024,
+        runtime=4 * 60,
     conda:
         DEFAULT_ENV
     shell:
@@ -24,9 +25,10 @@ rule fastq_input:
         fi
         """
 
+
 #
 # Alignment of fastqs to the 6Gbp donor specific assembly (DSA)
-# These outputs will have many mapq 0 reads that will later be adjusted. 
+# These outputs will have many mapq 0 reads that will later be adjusted.
 # But this is only becuase of the diploid setup, not a lack of confidence in the alignment.
 #
 rule bwa_mem2:
@@ -39,6 +41,7 @@ rule bwa_mem2:
     threads: MAX_THREADS
     resources:
         mem_mb=MAX_THREADS * 4 * 1024,
+        runtime=16 * 60,
     conda:
         DEFAULT_ENV
     params:
@@ -54,12 +57,13 @@ rule bwa_mem2:
                 -o {output.cram} --write-index
         """
 
+
 #
-# Index the chain file for leviosam2. 
+# Index the chain file for leviosam2.
 #
 # Input here is a chain file that defines the alignment between the DSA and the reference genome
 # at a contig level (>100 kbp of alignment).
-# 
+#
 # The output is a special leviosam2 index file that is used to lift over the alignments from the DSA to the reference genome.
 #
 rule leviosam2_index:
@@ -72,7 +76,8 @@ rule leviosam2_index:
         DEFAULT_ENV
     threads: 1
     resources:
-        mem_mb=64*1024,
+        mem_mb=64 * 1024,
+        runtime=16 * 60,
     shell:
         """
         {LEVIO_EXE} index \
@@ -80,6 +85,7 @@ rule leviosam2_index:
             -c {input.chain} \
             -F {input.fai}
         """
+
 
 #
 # Lift over the alignments from the DSA to the reference genome using the chain file / leviosam2 index.
@@ -99,6 +105,7 @@ rule leviosam2:
     threads: MAX_THREADS
     resources:
         mem_mb=MAX_THREADS * 4 * 1024,
+        runtime=16 * 60,
     conda:
         DEFAULT_ENV
     params:
@@ -130,7 +137,7 @@ rule leviosam2:
 # And the XS tag is set to zero for all reads that were aligned to the DSA.
 # This is a hueristic that we may need to return to in the future.
 #
-# Other tags and fields like CIGAR, bitflags, and MD are correctly updated by 
+# Other tags and fields like CIGAR, bitflags, and MD are correctly updated by
 # leviosam2 during liftover.
 #
 rule leviosam2_sorted:
@@ -143,6 +150,7 @@ rule leviosam2_sorted:
     threads: SORT_THREADS
     resources:
         mem_mb=SORT_THREADS * 4 * 1024,
+        runtime=16 * 60,
     conda:
         DEFAULT_ENV
     params:
