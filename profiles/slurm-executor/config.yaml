@@ -1,9 +1,9 @@
 executor: slurm
-jobs: 500
+jobs: 100
 latency-wait: 60
 max-jobs-per-second: 50
 default-resources:
-  - disk_mb=4096
   - mem_mb=16096
   - runtime=120
-  - slurm_partition=cpu-g2
+  - slurm_partition='cpu-g2'
+  - slurm_account='stergachislab'
