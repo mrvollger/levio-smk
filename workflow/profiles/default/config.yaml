@@ -7,8 +7,4 @@ software-deployment-method:
   - apptainer
   - conda
 cores: 32
-local-cores: 4
-default-resources:
-  - disk_mb=4096
-  - mem_mb=16096
-  - runtime=1200
+local-cores: 8
