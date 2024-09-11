@@ -40,7 +40,7 @@ rule bwa_mem2:
         crai="results/DSA/{sm}-bwamem2.cram.crai",
     threads: MAX_THREADS
     resources:
-        mem_mb=MAX_THREADS * 4 * 1024,
+        mem_mb=MAX_THREADS * 8 * 1024,
         runtime=16 * 60,
     conda:
         DEFAULT_ENV
