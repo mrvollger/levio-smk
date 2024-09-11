@@ -6,5 +6,4 @@ restart-times: 0
 software-deployment-method:
   - apptainer
   - conda
-cores: 32
-local-cores: 8
+local-cores: 16
