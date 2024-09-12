@@ -99,7 +99,7 @@ rule leviosam2:
         levio_index=rules.leviosam2_index.output.index,
         ref=REF,
     output:
-        liffted=temp("temp/{sm}/leviosam2/{sm}-committed.bam"),
+        lifted=temp("temp/{sm}/leviosam2/{sm}-committed.bam"),
         deferred=temp("temp/{sm}/leviosam2/{sm}-deferred.bam"),
         unliftable=temp("temp/{sm}/leviosam2/{sm}-unliftable.bam"),
     threads: MAX_THREADS
@@ -146,7 +146,7 @@ rule leviosam2:
 #
 rule leviosam2_sorted:
     input:
-        liffted=rules.leviosam2.output.liffted,
+        lifted=rules.leviosam2.output.lifted,
         ref=REF,
     output:
         cram="results/{sm}-leviosam2.cram",
