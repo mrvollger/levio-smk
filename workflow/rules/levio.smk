@@ -116,14 +116,16 @@ rule leviosam2:
             "levio_S",
             f"-S mapq:0 -S hdist:{50_000} -S isize:{50_000}",
         ),
+        T=config.get("levio_T", 50_000),
     shell:
         """
         PRE="temp/{wildcards.sm}/leviosam2/{wildcards.sm}"
-        {LEVIO_EXE} lift \
-            -t {threads} -T 100000 \
+        samtools view -@ {threads} -u {input.cram} \
+            | {LEVIO_EXE} lift \
+            -a - \
+            -t {threads} -T {params.T} \
             -G {params.G} {params.S} \
             -C {input.levio_index} \
-            -a {input.cram} \
             -p $PRE \
             -f {input.ref} -m \
             -O bam

@@ -6,4 +6,4 @@ default-resources:
   - slurm_partition='cpu-g2'
   - slurm_account='stergachislab'
   - mem_mb=16096
-  - runtime=240
+  - runtime=320
