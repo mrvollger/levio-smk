@@ -115,7 +115,7 @@ rule leviosam2:
         # we have to include some amount of clipping to avoid a segfault in leviosam2? (I think)
         S=config.get(
             "levio_S",
-            f"-S mapq:0 -S hdist:{10_000} -S isize:{10_000} -S clipped_frac:0.75",
+            f"-S mapq:0 -S hdist:{10_000} -S isize:{10_000} -S clipped_frac:0.95",
         ),
         # number of reads per thread
         T=config.get("levio_T", 1_000),
