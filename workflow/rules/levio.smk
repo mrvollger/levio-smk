@@ -117,10 +117,10 @@ rule leviosam2:
         # aln_score is the minumum score before the alignment is lifted over
         S=config.get(
             "levio_S",
-            f"-S mapq:0 -S hdist:{10_000} -S isize:{1_000} -S clipped_frac:0.95 -S aln_score:100",
+            f"-S mapq:0 -S hdist:{100_000} -S isize:{100_000} -S clipped_frac:0.95 -S aln_score:100",
         ),
         # number of reads per thread
-        T=config.get("levio_T", 256),
+        T=config.get("levio_T", 4*256),
     shell:
         """
         PRE="temp/{wildcards.sm}/leviosam2/{wildcards.sm}"
