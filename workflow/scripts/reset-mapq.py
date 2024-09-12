@@ -30,6 +30,7 @@ def main(
     first = True
 
     for rec in tqdm(bam.fetch(until_eof=True)):
+        rec.set_tag("mq", rec.mapping_quality)
         rec.mapping_quality = mapq
         if rec.has_tag("XS"):
             if first:
