@@ -113,25 +113,21 @@ rule leviosam2:
         G=config.get("levio_G", 100_000),
         # Using -S clipped_frac 0.05 means when a read has >5% clipped bases, it is deferred. A lower value is more stringent (by deferring more reads).
         # we have to include some amount of clipping to avoid a segfault in leviosam2? (I think)
+        # aln_score is the minumum score before the alignment is lifted over
         S=config.get(
             "levio_S",
-            f"-S mapq:0 -S hdist:{10_000} -S isize:{1_000} -S clipped_frac:0.25 -S aln_score:25",
+            f"-S mapq:0 -S hdist:{10_000} -S isize:{1_000} -S clipped_frac:0.25 -S aln_score:100",
         ),
         # number of reads per thread
         T=config.get("levio_T", 256),
     shell:
         """
         PRE="temp/{wildcards.sm}/leviosam2/{wildcards.sm}"
-        {LEVIO_EXE} lift \
-            -a {input.cram} \
-            -t {threads} \
+        {LEVIO_EXE} lift -t {threads} -a {input.cram} \
             -T {params.T} -G {params.G} {params.S} \
-            -C {input.levio_index} \
-            -p $PRE \
-            -f {input.ref} -m \
-            -O bam
-            # ^ bam is the only option, no CRAM.
+            -C {input.levio_index} -p $PRE -f {input.ref} -m -O bam
         """
+        # ^ bam is the only option, no CRAM.
         #samtools view -@ {threads} -u {input.cram} \
 
 
