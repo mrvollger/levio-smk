@@ -99,9 +99,9 @@ rule leviosam2:
         levio_index=rules.leviosam2_index.output.index,
         ref=REF,
     output:
-        cram=temp("temp/{sm}/leviosam2/{sm}-committed.cram"),
-        deferred=temp("temp/{sm}/leviosam2/{sm}-deferred.cram"),
-        unliftable=temp("temp/{sm}/leviosam2/{sm}-unliftable.cram"),
+        liffted=temp("temp/{sm}/leviosam2/{sm}-committed.bam"),
+        deferred=temp("temp/{sm}/leviosam2/{sm}-deferred.bam"),
+        unliftable=temp("temp/{sm}/leviosam2/{sm}-unliftable.bam"),
     threads: MAX_THREADS
     resources:
         mem_mb=MAX_THREADS * 4 * 1024,
@@ -128,7 +128,7 @@ rule leviosam2:
             -C {input.levio_index} \
             -p $PRE \
             -f {input.ref} -m \
-            -O cram
+            -O bam
         """
         #samtools view -@ {threads} -u {input.cram} \
 
@@ -145,7 +145,7 @@ rule leviosam2:
 #
 rule leviosam2_sorted:
     input:
-        cram=rules.leviosam2.output.cram,
+        cram=rules.leviosam2.output.liffted,
         ref=REF,
     output:
         cram="results/{sm}-leviosam2.cram",
@@ -160,7 +160,7 @@ rule leviosam2_sorted:
         reset_mapq=workflow.source_path("../scripts/reset-mapq.py"),
     shell:
         """
-        python {params.reset_mapq} -t {threads} {input.cram} \
+        python {params.reset_mapq} -t {threads} {input.lifted} \
             | samtools sort \
                 -@ {threads} -m 3G \
                 -O CRAM --reference {input.ref} --output-fmt-option embed_ref=1 \
