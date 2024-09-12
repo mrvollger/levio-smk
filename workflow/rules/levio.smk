@@ -16,7 +16,8 @@ rule fastq_input:
         """
         # check if input is bam
         if [[ {input.reads} =~ .*\\.(bam|sam|cram) ]]; then
-            samtools collate -@ {threads} -u -O {input.reads} -T $(dirname {output.fastq}) \
+            samtools view -u -F 2304 -@ {threads} {input.reads} \
+                | samtools collate -@ {threads} -u -O -T $(dirname {output.fastq}) \
                 | samtools fastq -@ {threads} -0 /dev/null \
                 | bgzip -@ {threads} \
                 > {output.fastq}
