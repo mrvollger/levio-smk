@@ -129,6 +129,7 @@ rule leviosam2:
             -p $PRE \
             -f {input.ref} -m \
             -O bam
+            # ^ bam is the only option, no CRAM.
         """
         #samtools view -@ {threads} -u {input.cram} \
 
