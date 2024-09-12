@@ -110,15 +110,15 @@ rule leviosam2:
         DEFAULT_ENV
     params:
         # maximum number of CIGAR opts to change, also the max gap size that can be spanned
-        G=config.get("levio_G", 10_000),
+        G=config.get("levio_G", 100_000),
         # Using -S clipped_frac 0.05 means when a read has >5% clipped bases, it is deferred. A lower value is more stringent (by deferring more reads).
         # we have to include some amount of clipping to avoid a segfault in leviosam2? (I think)
         S=config.get(
             "levio_S",
-            f"-S mapq:0 -S hdist:{10_000} -S isize:{10_000} -S clipped_frac:0.25",
+            f"-S mapq:0 -S hdist:{10_000} -S isize:{1_000} -S clipped_frac:0.25 -S aln_score:25",
         ),
         # number of reads per thread
-        T=config.get("levio_T", 1_000),
+        T=config.get("levio_T", 256),
     shell:
         """
         PRE="temp/{wildcards.sm}/leviosam2/{wildcards.sm}"
