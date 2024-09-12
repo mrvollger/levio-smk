@@ -146,7 +146,7 @@ rule leviosam2:
 #
 rule leviosam2_sorted:
     input:
-        cram=rules.leviosam2.output.liffted,
+        liffted=rules.leviosam2.output.liffted,
         ref=REF,
     output:
         cram="results/{sm}-leviosam2.cram",
