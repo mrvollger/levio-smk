@@ -111,7 +111,8 @@ rule leviosam2:
     params:
         # maximum number of CIGAR opts to change, also the max gap size that can be spanned
         G=config.get("levio_G", 10_000),
-        # "-S aln_score:100 -S clipped_frac:0.95",
+        # Using -S clipped_frac 0.05 means when a read has >5% clipped bases, it is deferred. A lower value is more stringent (by deferring more reads).
+        #  -S clipped_frac:0.75
         S=config.get(
             "levio_S",
             f"-S mapq:0 -S hdist:{10_000} -S isize:{10_000}",
